@@ -1,14 +1,15 @@
 from settings import *
 import pygame
 import math
-from map import collision_walls
+from map import collision_walls, empty_map
 
 class Player:
     def __init__(self, sprites):
-        self.x, self.y = player_pos
+        self.x, self.y = math.ceil(empty_map[9][0]) * TILE, math.ceil(empty_map[9][0]) * TILE
         self.sprites = sprites
         self.angle = player_angle
         self.sensitivity = 0.004
+
         # collision parameters
         self.side = 50
         self.rect = pygame.Rect(*player_pos, self.side, self.side)

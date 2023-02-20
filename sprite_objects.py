@@ -1,6 +1,8 @@
+
 import pygame
 from settings import *
 from collections import deque
+from map import empty_map
 
 
 class Sprites:
@@ -38,17 +40,16 @@ class Sprites:
         }
 
         self.list_of_objects = [
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (7.1, 2.1)), #сюда короч надо сами спарйты и их кординаты
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.4, 7.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.2, 2.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.8, 5.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 2.4)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (5.9, 9.4)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (4.3, 4.1)),
-            SpriteObject(self.sprite_parameters['sprite_barrel'], (10.9, 8.1)),
-            SpriteObject(self.sprite_parameters['roma'], (7, 4)),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[0]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[1]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[2]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[3]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[4]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[5]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[6]),
+            SpriteObject(self.sprite_parameters['sprite_barrel'], empty_map[7]),
+            SpriteObject(self.sprite_parameters['roma'], (math.ceil(empty_map[8][0]), math.ceil(empty_map[8][1]))),
         ]
-
 
 class SpriteObject:
     def __init__(self, parameters, pos):

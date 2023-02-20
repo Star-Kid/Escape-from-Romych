@@ -5,25 +5,25 @@ from numba.core import types
 from numba.typed import Dict
 from numba import int64, float64
 
-_ = False
-matrix_map = [
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1], #загрузка карты с помощью двух мерного массива
-    [1, _, _, _, _, _, 2, _, _, _, _, _, _, _, _, _, _, 2, _, _, _, _, _, 1],
-    [1, _, 2, 2, _, _, _, _, _, 2, 2, 2, _, _, _, 2, _, _, _, _, 2, _, _, 1],
-    [1, _, _, _, _, _, _, _, _, _, _, 2, 2, _, _, _, 2, _, _, _, _, _, _, 1],
-    [1, _, 2, 2, _, _, _, _, _, _, _, _, 2, _, 2, _, _, 2, _, _, _, 2, _, 1],
-    [1, _, _, _, _, _, 2, _, _, 2, 2, _, 2, _, _, _, _, _, _, 2, _, _, _, 1],
-    [1, _, 2, _, _, _, 2, _, _, 2, _, _, 2, _, _, _, 2, _, _, _, _, 2, _, 1],
-    [1, _, _, 2, _, _, 2, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, 1],
-    [1, _, 2, _, _, _, _, _, _, _, 2, _, _, 2, 2, _, _, _, _, 2, 2, _, _, 1],
-    [1, _, 2, _, _, _, 2, 2, _, 2, _, _, _, 2, 2, _, _, _, _, 2, 2, _, _, 1],
-    [1, _, _, _, _, 1, _, 2, _, _, 2, _, _, _, _, _, _, _, _, _, _, _, _, 1],
-    [1, _, 2, _, 2, _, _, _, _, 2, _, _, 2, _, _, _, _, _, _, _, _, 2, _, 1],
-    [1, _, _, _, _, _, 2, _, _, _, _, _, 2, 2, _, _, _, _, _, _, 2, 2, _, 1],
-    [1, _, _, 2, _, _, _, _, 2, _, _, _, _, 2, 2, 2, _, 2, 2, 2, 2, _, _, 1],
-    [1, _, _, _, _, _, _, _, _, _, 2, _, _, _, _, _, _, _, _, _, _, _, _, 1],
-    [1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
-]
+matrix_map = [[0 for j in range(24)] for i in range(16)]
+empty_map = []
+for i in range(24): matrix_map[0][i] = 1
+for i in range(24): matrix_map[15][i] = 1
+for i in range(16): matrix_map[i][0] = 1
+for i in range(16): matrix_map[i][23] = 1
+for i in range(0, 16):
+    for j in range(0, 24):
+        if matrix_map[i][j] == 0:
+            empty_map.append((i + random.randint(0, 9) * 0.1, j + random.randint(0, 9) * 0.1))
+
+random.shuffle(empty_map)
+
+for i in range(50):
+    matrix_map[random.randint(1, 15)][random.randint(1, 23)] = 1
+for i in range(len(matrix_map)):    #генерация разных стен
+    for j in range(len(matrix_map[i])):
+        if matrix_map[i][j] == 2 or matrix_map[i][j] == 1:
+            matrix_map[i][j] = random.randint(2, 4)
 for i in range(len(matrix_map)):    #генерация разных стен
     for j in range(len(matrix_map[i])):
         if matrix_map[i][j] == 2 or matrix_map[i][j] == 1:

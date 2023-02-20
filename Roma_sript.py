@@ -1,8 +1,13 @@
+import optparse
+import os
+import sys
+
 from settings import *
 from map import world_map
 from ray_casting import mapping
 import math
-import sys
+from map import empty_map
+import drawing
 
 
 
@@ -46,25 +51,29 @@ class Interaction:
         self.sprites = sprites
         self.drawing = drawing
 
-    def npc_action(self):
+    def npc_action(self, tick):
         for obj in self.sprites.list_of_objects:
             if obj.flag == 'npc':
                 if ray_casting_npc_player(obj.x, obj.y,
                                           world_map, self.player.pos):
                     obj.npc_action_trigger = True
-                    self.npc_move(obj)
+                    self.npc_move(obj, tick)
                 else:
                     obj.npc_action_trigger = False
 
-    def npc_move(self, obj):
-        if abs(obj.distance_to_sprite) > TILE:
+    def npc_move(self, obj, tick):
+        if abs(obj.distance_to_sprite) > 50:
             dx = obj.x - self.player.pos[0]
             dy = obj.y - self.player.pos[1]
             obj.x = obj.x + roma_speed if dx < 0 else obj.x - roma_speed
             obj.y = obj.y + roma_speed if dy < 0 else obj.y - roma_speed
-        elif abs(obj.distance_to_sprite) < TILE:
-            obj.x = 7 * TILE
-            obj.y = 4 * TILE
+        elif abs(obj.distance_to_sprite) < 50:
+            obj.x = int(empty_map[8][0]) * TILE
+            obj.y = int(empty_map[8][1]) * TILE
             self.player.x, self.player.y = player_pos
-            self.drawing.menu_trigger = True
-            self.drawing.menu()
+            with open("record.txt", "a") as file:
+                file.write(f" {tick}")
+            file.close()
+            os.system("main.py")
+            exit()
+            sys.exit()

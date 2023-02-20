@@ -1,10 +1,14 @@
 import time
 
+from Roma_sript import Interaction
+from map import empty_map
 import pygame
 from settings import *
-from ray_casting import ray_casting
 from random import randrange
 import sys
+from sprite_objects import SpriteObject
+
+
 
 class Drawing:
     def __init__(self, sc, clock): #тестуры стен
@@ -18,6 +22,9 @@ class Drawing:
                          'S': pygame.image.load('img/sky.png').convert()
                          }
         self.menu_trigger = True
+        file = open('record.txt').read()
+        self.record = [float(i) for i in file.split()]
+        self.reroc_trigger = False
         self.menu_picture = pygame.image.load('img/bg.jpg').convert()
 
     def background(self, angle): #загрузка заднего фона
@@ -37,14 +44,6 @@ class Drawing:
         display_fps = str(int(clock.get_fps()))
         render = self.font.render(display_fps, 0, DARKORANGE)
         self.sc.blit(render, FPS_POS)
-
-    def time(self, clock):
-        display_time = 0
-        while self.menu_trigger:
-            display_time += 1
-            time.sleep(1)
-            render = self.font.render(display_time, 0, DARKORANGE)
-            self.sc.blit(render, TIME_POS)
 
 
     def menu(self): #менюха
@@ -74,7 +73,9 @@ class Drawing:
             self.sc.blit(exit, (button_exit.centerx - 85, button_exit.centery - 70))
 
             color = randrange(160)
-            label = label_font.render('Escap from Romych', 1, (color, color, color))
+            label = label_font.render('Escape from Romych', 1, (color, color, color))
+            Record = button_font.render(f"Record: {max(self.record)}", 1, pygame.Color('lightgray'))
+            self.sc.blit(Record, (HALF_WIDTH - 100, HALF_HEIGHT + 300))
             self.sc.blit(label, (15, -30))
 
             mouse_pos = pygame.mouse.get_pos()
@@ -93,3 +94,21 @@ class Drawing:
 
             pygame.display.flip()
             self.clock.tick(20)
+class Time:
+    def __init__(self, sprite, player, initer, drw, sc):
+        self.seconds = 0
+        self.sprite = sprite
+        self.player = player
+        self.initer = initer
+        self.draw = drw
+        self.sc = sc
+        self.font = pygame.font.SysFont('Arial', 36, bold=True)
+        self.i = 10
+
+    def time(self, tick):
+        self.seconds = tick
+        render = self.font.render(str(self.seconds), 0, SANDY)
+        self.sc.blit(render, TIME_POS)
+        if self.seconds % 2.00 == 0:
+            self.sprite.list_of_objects.append(SpriteObject(self.sprite.sprite_parameters['roma'], (empty_map[self.i])))
+            self.i += 1

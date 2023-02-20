@@ -10,12 +10,12 @@ DOUBLE_HEIGHT = 2 * HEIGHT
 FPS = 120
 TILE = 100
 FPS_POS = (WIDTH - 65, 5)
-TIME_POS = (WIDTH - 65, 5)
+TIME_POS = (15, 5)
 
 # minimap settings
 MINIMAP_SCALE = 5
 MINIMAP_RES = (WIDTH // MINIMAP_SCALE, HEIGHT // MINIMAP_SCALE)
-MAP_SCALE = 2 * 5 # 1 -> 12 x 8, 2 -> 24 x 16, 3 -> 36 x 24
+MAP_SCALE = 2 * 5
 MAP_TILE = TILE // MAP_SCALE
 MAP_POS = (0, HEIGHT - HEIGHT // MINIMAP_SCALE)
 
@@ -46,7 +46,7 @@ player_angle = 0
 player_speed = 2
 
 # roma setting
-roma_speed = player_speed + 2
+roma_speed = player_speed - 1
 
 
 # colors
